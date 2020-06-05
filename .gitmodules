@@ -1,0 +1,3 @@
+[submodule "redmine-themes/PurpleMine2"]
+	path = redmine-themes/PurpleMine2
+	url = https://github.com/mrliptontea/PurpleMine2.git
