@@ -1,0 +1,37 @@
+version: '3.7'
+
+services:
+
+  redmine:
+    image: redmine
+    restart: always
+    ports:
+      - 8080:3000
+    environment:
+      REDMINE_DB_POSTGRES: db_redmine
+      REDMINE_DB_USERNAME: redmine
+      REDMINE_DB_PASSWORD: redmine
+      REDMINE_SECRET_KEY_BASE: redmine
+      REDMINE_DB_PORT: 5432
+    volumes:
+      - ./redmine-themes:/usr/src/redmine/public/themes
+      - ./redmine-plugins:/usr/src/redmine/plugins
+    networks:
+      - redmine
+
+  db_redmine:
+    image: postgres
+    networks:
+      - redmine
+    restart: always
+    ports:
+      - 5433:5432
+    environment:
+      POSTGRES_PASSWORD: redmine
+      POSTGRES_USER: redmine
+      POSTGRES_DB: redmine
+networks:
+  redmine:
+    driver: bridge
+
+# bundle install --without development test --no-deployment && bundle exec rake redmine:plugins NAME=redmine_agile RAILS_ENV=production
